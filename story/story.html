@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        CTRL+Z — Story
+    </title>
+
+
+    <!-- CSS khusus Story Runtime -->
+
+    <link
+        rel="stylesheet"
+        href="../css/story.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================================== -->
+    <!-- VISUAL NOVEL -->
+    <!-- ================================================== -->
+
+    <main
+        id="visual-novel"
+        class="visual-novel"
+    >
+
+
+        <!-- ============================================== -->
+        <!-- BACKGROUND -->
+        <!-- ============================================== -->
+
+        <div
+            id="scene-background"
+            class="scene-background"
+        ></div>
+
+
+        <!-- ============================================== -->
+        <!-- CINEMATIC OVERLAY -->
+        <!-- ============================================== -->
+
+        <div class="scene-vignette"></div>
+
+        <div class="scene-scanlines"></div>
+
+
+        <!-- ============================================== -->
+        <!-- CHARACTER STAGE -->
+        <!-- ============================================== -->
+
+        <section class="character-stage">
+
+
+            <img
+
+                id="character-sprite"
+
+                class="character-sprite"
+
+                src="../assets/sprite/Liam.png"
+
+                alt="Liam"
+
+            >
+
+
+        </section>
+
+                <!-- ====================================== -->
+                <!-- CHOICE -->
+                <!-- ====================================== -->
+
+                <aside
+
+                    id="choice-panel"
+
+                    class="choice-panel hidden"
+
+                >
+
+
+                    <div
+
+                        id="choice-list"
+
+                        class="choice-list"
+
+                    ></div>
+
+
+                </aside>
+        <!-- ============================================== -->
+        <!-- STORY HUD -->
+        <!-- ============================================== -->
+            <header class="speaker-nameplate">
+
+
+                <span class="name-decoration">
+
+                    //
+
+                </span>
+
+
+                <h1 id="speaker-name">
+
+                    LIAM
+
+                </h1>
+
+
+                <span class="speaker-status">
+
+                    LINKED
+
+                </span>
+
+
+            </header>
+            
+        <section
+
+            id="story-interface"
+
+            class="story-interface"
+
+        >
+
+
+            <!-- ========================================== -->
+            <!-- NAMEPLATE -->
+            <!-- ========================================== -->
+
+
+
+            <!-- ========================================== -->
+            <!-- DIALOGUE AND CHOICE -->
+            <!-- ========================================== -->
+
+            <div class="story-content">
+
+
+                <!-- ====================================== -->
+                <!-- DIALOGUE -->
+                <!-- ====================================== -->
+
+                <article class="dialogue-panel">
+
+
+                    <div class="dialogue-header">
+
+
+                        <span>
+
+                            TIMELINE COMMUNICATION
+
+                        </span>
+
+
+                        <span id="dialogue-code">
+
+                            LOG // 0001
+
+                        </span>
+
+
+                    </div>
+
+
+                    <p
+
+                        id="dialogue-text"
+
+                        class="dialogue-text"
+
+                    >
+
+                        Click anywhere to initialize
+                        the timeline...
+
+                    </p>
+
+
+                    <span
+
+                        id="continue-indicator"
+
+                        class="continue-indicator"
+
+                    >
+
+                        ▼
+
+                    </span>
+
+
+                </article>
+
+            </div>
+
+
+            <!-- ========================================== -->
+            <!-- QUICK MENU -->
+            <!-- ========================================== -->
+
+            <nav class="quick-menu">
+
+
+                <button
+
+                    class="quick-button"
+
+                    data-command="log"
+
+                >
+
+                    <span>
+
+                        ▤
+
+                    </span>
+
+                    LOG
+
+                </button>
+
+
+                <button
+
+                    id="auto-button"
+
+                    class="quick-button"
+
+                    data-command="auto"
+
+                >
+
+                    <span>
+
+                        ▷
+
+                    </span>
+
+                    AUTO
+
+                </button>
+
+
+                <button
+
+                    id="skip-button"
+
+                    class="quick-button"
+
+                    data-command="skip"
+
+                >
+
+                    <span>
+
+                        ≫
+
+                    </span>
+
+                    SKIP
+
+                </button>
+
+
+                <button
+
+                    class="quick-button"
+
+                    data-command="save"
+
+                >
+
+                    <span>
+
+                        ▣
+
+                    </span>
+
+                    SAVE
+
+                </button>
+
+
+                <button
+
+                    class="quick-button"
+
+                    data-command="load"
+
+                >
+
+                    <span>
+
+                        ⇧
+
+                    </span>
+
+                    LOAD
+
+                </button>
+
+
+                <button
+
+                    class="quick-button"
+
+                    data-command="menu"
+
+                >
+
+                    <span>
+
+                        ⚙
+
+                    </span>
+
+                    MENU
+
+                </button>
+
+
+                <button
+
+                    class="quick-button"
+
+                    data-command="config"
+
+                >
+
+                    <span>
+
+                        ☷
+
+                    </span>
+
+                    CONFIG
+
+                </button>
+
+
+            </nav>
+
+
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- SYSTEM MESSAGE -->
+        <!-- ============================================== -->
+
+        <aside
+
+            id="system-notification"
+
+            class="system-notification"
+
+        >
+
+
+            <strong>
+
+                SYSTEM
+
+            </strong>
+
+
+            <span
+
+                id="notification-text"
+
+            >
+
+                TIMELINE INITIALIZED
+
+            </span>
+
+
+        </aside>
+
+
+    </main>
+
+
+    <!-- JavaScript khusus Story Runtime -->
+
+    <script
+
+        src="../js/story.js"
+
+    ></script>
+
+
+</body>
+
+</html>

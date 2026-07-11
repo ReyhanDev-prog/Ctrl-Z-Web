@@ -1,0 +1,1130 @@
+
+/* ======================================================== */
+/* CTRL+Z STORY RUNTIME                                     */
+/* ======================================================== */
+
+
+* {
+
+    box-sizing:
+        border-box;
+
+    margin:
+        0;
+
+    padding:
+        0;
+
+}
+
+
+:root {
+
+    --cyan:
+        #21cfff;
+
+    --cyan-light:
+        #b9f2ff;
+
+    --cyan-dark:
+        #076eaa;
+
+    --background:
+        #010712;
+
+    --panel:
+
+        rgba(
+            1,
+            13,
+            29,
+            0.94
+        );
+
+    --panel-light:
+
+        rgba(
+            4,
+            35,
+            62,
+            0.88
+        );
+
+    --border:
+
+        rgba(
+            33,
+            207,
+            255,
+            0.85
+        );
+
+    --white:
+        #edfaff;
+
+
+}
+
+html,
+body {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+}
+
+
+body {
+
+    overflow:
+        hidden;
+
+    color:
+        var(--white);
+
+    background:
+        #01040a;
+
+    font-family:
+
+        Arial,
+        Helvetica,
+        sans-serif;
+
+}
+
+
+/* ======================================================== */
+/* VISUAL NOVEL                                             */
+/* ======================================================== */
+
+.visual-novel {
+
+    position:
+        relative;
+
+    width:
+        100vw;
+
+    height:
+        100vh;
+
+    overflow:
+        hidden;
+
+    user-select:
+        none;
+
+}
+
+
+/* ======================================================== */
+/* PLACEHOLDER BACKGROUND                                   */
+/* ======================================================== */
+
+.scene-background {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+
+    background:
+
+        linear-gradient(
+
+            rgba(
+                255,
+                255,
+                255,
+                0.08
+            ),
+
+            rgba(
+                0,
+                20,
+                45,
+                0.15
+            )
+
+        ),
+
+
+        linear-gradient(
+
+            to bottom,
+
+            #d9edf1 0%,
+
+            #b9d6da 45%,
+
+            #788f96 100%
+
+        );
+
+}
+
+
+/* Fake window */
+
+.scene-background::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        7%;
+
+    right:
+        7%;
+
+    top:
+        5%;
+
+    height:
+        57%;
+
+
+    border:
+
+        18px solid
+        rgba(
+            130,
+            148,
+            153,
+            0.7
+        );
+
+
+    background:
+
+        repeating-linear-gradient(
+
+            90deg,
+
+            rgba(
+                220,
+                244,
+                244,
+                0.8
+            )
+            0,
+
+            rgba(
+                220,
+                244,
+                244,
+                0.8
+            )
+            22%,
+
+            rgba(
+                120,
+                143,
+                150,
+                0.8
+            )
+            22.5%,
+
+            rgba(
+                120,
+                143,
+                150,
+                0.8
+            )
+            24%
+
+        );
+
+}
+
+
+/* Fake floor */
+
+.scene-background::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    right:
+        0;
+
+    bottom:
+        0;
+
+    height:
+        42%;
+
+
+    background:
+
+        repeating-linear-gradient(
+
+            90deg,
+
+            transparent
+            0,
+
+            transparent
+            100px,
+
+            rgba(
+                38,
+                59,
+                67,
+                0.2
+            )
+            101px
+
+        ),
+
+        linear-gradient(
+
+            #aebbbd,
+
+            #63747a
+
+        );
+
+}
+
+
+/* ======================================================== */
+/* OVERLAY                                                  */
+/* ======================================================== */
+
+.scene-vignette {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    pointer-events:
+        none;
+
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            transparent
+            45%,
+
+            rgba(
+                0,
+                5,
+                15,
+                0.65
+            )
+            120%
+
+        );
+
+}
+
+/* Cinematic bottom vignette + smooth dark gradient */
+.scene-vignette {
+
+    /* sit above sprites but below UI */
+    z-index: 25;
+
+    /* combine radial soft vignette with cinematic linear gradient from ~55% down */
+    background:
+        radial-gradient(circle, transparent 45%, rgba(0,5,15,0.45) 95%),
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0) 55%,
+            rgba(0,0,0,0.15) 65%,
+            rgba(0,5,12,0.65) 82%,
+            rgba(0,3,8,0.92) 100%
+        );
+
+}
+
+
+.scene-scanlines {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        20;
+
+    opacity:
+        0.07;
+
+    pointer-events:
+        none;
+
+
+    background:
+
+        repeating-linear-gradient(
+
+            to bottom,
+
+            transparent
+            0,
+
+            transparent
+            3px,
+
+            var(--cyan)
+            4px
+
+        );
+
+}
+
+
+
+/* ======================================================== */
+/* CHARACTER                                                */
+/* ======================================================== */
+
+.character-stage {
+
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+}
+
+.character-sprite {
+
+    position: absolute;
+    bottom: 22%;
+    left: 50%;
+
+    width: min(55vw, 850px);
+
+    /* Target height so character dominates the scene while respecting aspect */
+    height: 86vh;
+
+    object-fit: contain;
+    object-position: center bottom;
+
+    transform: translateX(-50%);
+
+    /* Ensure sprite sits above background but below vignette and textbox */
+    z-index: 15;
+
+    /* Soft drop shadow so character separates from background */
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+
+    animation: characterEnter 750ms ease-out;
+
+}
+
+@keyframes characterEnter {
+
+    from {
+
+        opacity:
+            0;
+
+        transform:
+
+            translate(
+                -50%,
+                40px
+            );
+
+    }
+
+
+    to {
+
+        opacity:
+            1;
+
+        transform:
+
+            translate(
+                -50%,
+                0
+            );
+
+    }
+
+}
+
+
+
+/* ======================================================== */
+/* STORY INTERFACE                                          */
+/* ======================================================== */
+
+.story-interface {
+
+    position: absolute;
+
+    left: 2%;
+    right: 2%;
+    bottom: 2%;
+
+    /* responsive height ~24vh with sensible limits */
+    height: clamp(18vh, 24vh, 28vh);
+
+    /* raise above vignette */
+    z-index: 40;
+
+    padding: clamp(12px, 2vh, 26px) clamp(18px, 3vw, 36px) clamp(10px, 1.6vh, 22px);
+
+    border: 2px solid var(--cyan);
+
+    background: linear-gradient(135deg, rgba(1,19,39,0.94), rgba(0,7,18,0.9));
+
+    box-shadow: 0 0 30px rgba(0,166,255,0.35), inset 0 0 55px rgba(0,112,190,0.12);
+
+    clip-path: polygon(28px 0, calc(100% - 28px) 0, 100% 28px, 100% calc(100% - 28px), calc(100% - 28px) 100%, 28px 100%, 0 calc(100% - 28px), 0 28px);
+
+}
+
+/* Grid texture (very faint) */
+.story-interface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    pointer-events: none;
+    background-image: linear-gradient(var(--cyan) 1px, transparent 1px), linear-gradient(90deg, var(--cyan) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+
+/* ======================================================== */
+/* NAMEPLATE                                                */
+/* ======================================================== */
+
+.speaker-nameplate {
+
+    position: absolute;
+    left: clamp(28px, 3%, 5%);
+    bottom: calc(
+    2%
+    +
+    clamp(18vh, 24vh, 28vh)
+    -
+    15px
+);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+
+    min-width: clamp(260px, 18vw, 340px);
+    height: clamp(55px, 6vh, 65px);
+
+
+
+    padding: 0 30px;
+    border: 1px solid var(--cyan);
+    background: linear-gradient(90deg, rgba(5,20,40,0.78), rgba(3,12,28,0.86));
+    clip-path: polygon(15px 0, 100% 0, calc(100% - 20px) 100%, 0 100%, 0 15px);
+    box-shadow: 0 0 20px rgba(33,207,255,0.38);
+    z-index: 45;
+
+}
+
+
+.speaker-nameplate h1 {
+
+    color:
+        white;
+
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 700;
+
+    letter-spacing:
+        2px;
+
+
+    text-shadow:
+
+        0
+        0
+        10px
+
+        var(--cyan);
+
+}
+
+
+.name-decoration {
+
+    color:
+        var(--cyan);
+
+}
+
+
+.speaker-status {
+
+    margin-left:
+        auto;
+
+    color:
+        #58e8ff;
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        2px;
+
+}
+
+
+/* ======================================================== */
+/* STORY CONTENT                                            */
+/* ======================================================== */
+
+.story-content {
+
+    position:
+        static;
+
+    z-index:
+        2;
+
+    display: block;
+
+    /* Dialogue occupies most of the textbox; choices float on the right when present */
+    min-height: 0;
+
+}
+
+
+/* ======================================================== */
+/* DIALOGUE                                                 */
+/* ======================================================== */
+
+.dialogue-panel {
+
+    position:
+        relative;
+
+    padding: 22px 28px 10px 30px;
+    border: none;
+    min-height: 0;
+
+}
+
+
+.dialogue-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+
+    margin-bottom:
+        14px;
+
+
+    color:
+        #4d9dbc;
+
+
+    font-family:
+        monospace;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        2px;
+
+}
+
+
+.dialogue-text {
+
+    max-width:
+        850px;
+
+
+    color:
+        white;
+
+
+    font-size: clamp(18px, 1.35vw, 25px);
+    line-height: 1.55;
+
+
+    text-shadow:
+
+        0
+        2px
+        5px
+
+        black;
+
+}
+
+
+.continue-indicator {
+
+    position:
+        absolute;
+
+    right:
+        30px;
+
+    bottom:
+        15px;
+
+
+    color:
+        var(--cyan);
+
+
+    animation:
+
+        indicator
+
+        800ms
+
+        alternate
+
+        infinite;
+
+}
+
+
+@keyframes indicator {
+
+    to {
+
+        transform:
+
+            translateY(
+                7px
+            );
+
+    }
+
+}
+
+
+/* ======================================================== */
+/* CHOICE                                                   */
+/* ======================================================== */
+
+.choice-panel {
+
+    /* Anchor choice panel to the story textbox container so it never floats outside */
+    position: absolute;
+    right: clamp(14px, 2.5%, 32px);
+    bottom: calc(2% + clamp(18vh, 24vh, 28vh) + 50px);
+    width: clamp(320px, 34vw, 520px);
+    padding: 14px 18px;
+    background: linear-gradient(to bottom, rgba(3, 28, 50, 0.96), rgba(0, 8, 20, 0.96));
+    pointer-events: auto;
+    border: 1px solid rgba(33, 207, 255, 0.8);
+    z-index: 46;
+    box-sizing: border-box;
+    overflow: visible;
+
+}
+
+.choice-list {
+    display: grid;
+    gap: 16px;
+}
+
+/* =========================================================
+   CHOICE BUTTON — NORMAL
+========================================================= */
+
+.choice-panel .choice-button {
+
+    display: block;
+
+    position: relative;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 16px 20px;
+
+    border: 1px solid #21cfff;
+
+    background: linear-gradient(
+        90deg,
+        rgba(4, 42, 72, 0.9),
+        rgba(1, 15, 30, 0.9)
+    );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        padding-left 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease;
+}
+
+
+/* =========================================================
+   CHOICE BUTTON — HOVER
+========================================================= */
+
+.choice-panel .choice-button:hover {
+    padding-left: 28px;
+
+    border-color: white;
+
+    background: linear-gradient(
+        90deg,
+        rgba(6, 80, 125, 0.95),
+        rgba(2, 30, 55, 0.95)
+    );
+
+    box-shadow:
+        0 0 18px
+        rgba(33, 207, 255, 0.55);
+
+    transform:
+        translateX(4px);
+}
+
+
+/* =========================================================
+   CHOICE BUTTON — ACTIVE / SAAT DIKLIK
+========================================================= */
+
+.choice-panel  .choice-button:active {
+    transform:
+        translateX(4px)
+        scale(0.98);
+
+    background:
+        rgba(9, 100, 150, 0.95);
+}
+
+
+/* =========================================================
+   KEYBOARD FOCUS
+========================================================= */
+
+.choice-panel .choice-button:focus-visible {
+    outline:
+        2px solid white;
+
+    outline-offset:
+        3px;
+}
+
+.choice-panel .choice-button::after {
+
+    content:
+        "≫";
+
+
+    position:
+        absolute;
+
+    right:
+        20px;
+
+
+    color:
+        var(--cyan);
+
+
+    font-size: 24px;
+
+}
+
+.hidden {
+
+    display:
+        none;
+
+}
+
+
+/* ======================================================== */
+/* QUICK MENU                                               */
+/* ======================================================== */
+
+.quick-menu {
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: clamp(8px, 1.2vh, 14px);
+    z-index: 48;
+    display: flex;
+    gap: clamp(8px, 1.2vw, 14px);
+    padding-top: 0;
+    border-top: none;
+
+}
+
+
+.quick-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(80px, 6.5vw, 95px);
+    height: clamp(52px, 5.5vh, 64px);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    background: linear-gradient(#062747, #011021);
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 180ms, box-shadow 180ms;
+
+}
+
+
+.quick-button span {
+    font-size: clamp(20px, 2.4vw, 28px);
+
+}
+
+
+.quick-button:hover {
+
+    color: white;
+    transform: translateY(-6px);
+    box-shadow: 0 6px 24px rgba(33,207,255,0.32);
+
+}
+
+
+/* ======================================================== */
+/* NOTIFICATION                                             */
+/* ======================================================== */
+
+.system-notification {
+
+    position:
+        absolute;
+
+    z-index:
+        100;
+
+
+    left:
+        50%;
+
+    top:
+        40px;
+
+
+    display:
+        flex;
+
+    gap:
+        20px;
+
+
+    opacity:
+        0;
+
+
+    padding:
+
+        15px
+        30px;
+
+
+    border:
+
+        1px solid
+        var(--cyan);
+
+
+    background:
+
+        rgba(
+            1,
+            13,
+            28,
+            0.96
+        );
+
+
+    transform:
+
+        translate(
+            -50%,
+            -25px
+        );
+
+
+    transition:
+
+        250ms;
+
+}
+
+
+.system-notification.show {
+
+    opacity:
+        1;
+
+
+    transform:
+
+        translate(
+            -50%,
+            0
+        );
+
+}
+
+
+.system-notification strong {
+
+    color:
+        white;
+
+}
+
+
+/* ======================================================== */
+/* RESPONSIVE                                               */
+/* ======================================================== */
+
+@media
+(max-height: 800px) {
+
+
+    .story-interface {
+
+        position: absolute;
+        height: clamp(16vh, 20vh, 24vh);
+
+    }
+
+
+    .character-sprite {
+
+        height: 74vh;
+
+    }
+
+
+    .quick-button {
+
+        height: clamp(46px, 5vh, 56px);
+
+    }
+
+
+    .quick-button span {
+
+        font-size:
+            20px;
+
+    }
+
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET DAN MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    /* Susunan dialog menjadi satu kolom */
+
+    .story-content {
+        grid-template-columns: 1fr;
+    }
+
+    /* Judul CHOICE */
+
+    .choice-panel h2 {
+        margin-bottom: 18px;
+
+        color: #21cfff;
+
+        font-size: 24px;
+
+        letter-spacing: 2px;
+    }
+
+
+    /* Tombol pilihan */
+
+    .choice-button {
+        width: 100%;
+
+        padding: 14px 50px 14px 18px;
+
+        font-size: 16px;
+    }
+
+
+    /* Posisi simbol panah */
+
+    .choice-button::after {
+        right: 16px;
+
+        font-size: 24px;
+    }
+
+
+    /* Jarak quick menu */
+
+    .quick-menu {
+        gap: 5px;
+    }
+
+
+    /* Ukuran tombol quick menu */
+
+    .quick-button {
+        width: 70px;
+    }
+
+}

@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CTRL+Z — Rewrite the Past</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- ===================================================== -->
+    <!-- BACKGROUND -->
+    <!-- ===================================================== -->
+
+    <div class="background"></div>
+
+    <div class="background-overlay"></div>
+
+    <div class="scanlines"></div>
+
+    <div class="noise"></div>
+
+    <!-- ===================================================== -->
+    <!-- MAIN APPLICATION -->
+    <!-- ===================================================== -->
+
+    <main class="game-menu">
+
+        <!-- ================================================= -->
+        <!-- MAIN MENU SCREEN -->
+        <!-- ================================================= -->
+
+        <section
+            id="main-menu-screen"
+            class="screen active-screen"
+        >
+      <!-- ================================================= -->
+      <!-- LEFT HUD -->
+      <!-- ================================================= -->
+
+      <section class="left-hud hud-panel">
+        <!-- Decorative HUD corners -->
+
+        <span class="corner top-left"></span>
+
+        <span class="corner top-right"></span>
+
+        <span class="corner bottom-left"></span>
+
+        <span class="corner bottom-right"></span>
+
+        <!-- ============================================= -->
+        <!-- GAME LOGO -->
+        <!-- ============================================= -->
+
+        <header class="game-header">
+          <div class="small-data">
+            <span>/// SYSTEM 01</span>
+
+            <span>● ● ● ● ●</span>
+          </div>
+
+          <h1 class="game-logo">CTRL<span>+</span>Z</h1>
+
+          <p class="tagline">REWRITE THE PAST</p>
+        </header>
+
+        <!-- ============================================= -->
+        <!-- SYSTEM STATUS -->
+        <!-- ============================================= -->
+
+        <section class="timeline-status">
+          <div>
+            <span>SYSTEM STATUS</span>
+
+            <strong>ONLINE</strong>
+          </div>
+
+          <div>
+            <span>TIMELINE CORE</span>
+
+            <strong>ACTIVE</strong>
+          </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!-- NAVIGATION -->
+        <!-- ============================================= -->
+
+        <nav class="menu-navigation">
+          <button class="menu-button active" data-action="start">
+            <span class="button-icon"> ▶ </span>
+
+            <span class="button-label"> START STORY </span>
+
+            <span class="button-code"> 01 </span>
+          </button>
+
+          <button class="menu-button" data-action="continue">
+            <span class="button-icon"> ▣ </span>
+
+            <span class="button-label"> CONTINUE </span>
+
+            <span class="button-code"> 02 </span>
+          </button>
+
+          <button class="menu-button" data-action="chapter">
+            <span class="button-icon"> ▤ </span>
+
+            <span class="button-label"> CHAPTER DATABASE </span>
+
+            <span class="button-code"> 03 </span>
+          </button>
+
+          <button class="menu-button" data-action="character">
+            <span class="button-icon"> ● </span>
+
+            <span class="button-label"> CHARACTER FILES </span>
+
+            <span class="button-code"> 04 </span>
+          </button>
+
+          <button class="menu-button" data-action="achievement">
+            <span class="button-icon"> ♜ </span>
+
+            <span class="button-label"> ACHIEVEMENT LOG </span>
+
+            <span class="button-code"> 05 </span>
+          </button>
+
+          <button class="menu-button" data-action="settings">
+            <span class="button-icon"> ⚙ </span>
+
+            <span class="button-label"> SETTINGS </span>
+
+            <span class="button-code"> 06 </span>
+          </button>
+
+          <button class="menu-button exit-button" data-action="exit">
+            <span class="button-icon"> ⏻ </span>
+
+            <span class="button-label"> EXIT </span>
+
+            <span class="button-code"> 07 </span>
+          </button>
+        </nav>
+
+        <!-- ============================================= -->
+        <!-- CLOCK -->
+        <!-- ============================================= -->
+
+        <section class="clock-panel">
+          <div class="clock-information">
+            <time id="clock"> 00:00:00 </time>
+
+            <p id="day">INITIALIZING</p>
+
+            <p id="date">SYSTEM DATE</p>
+          </div>
+
+          <div class="radar">
+            <span class="radar-line"></span>
+
+            <span class="radar-dot"></span>
+          </div>
+        </section>
+      </section>
+
+        <!-- ================================================= -->
+        <!-- CHARACTER AREA -->
+        <!-- ================================================= -->
+
+        <section class="character-stage">
+
+            <!-- KARAKTER KIRI -->
+
+            <div class="character character-left">
+
+                <img
+                    src="assets/sprites/Rachel.png"
+                    alt="Rachel"
+                    class="character-image"
+                >
+
+            </div>
+
+
+            <!-- KARAKTER TENGAH -->
+
+            <div class="character character-center">
+
+                <img
+                    src="assets/sprites/Liam.png"
+                    alt="Liam"
+                    class="character-image"
+                >
+
+            </div>
+
+
+            <!-- KARAKTER KANAN -->
+
+            <div class="character character-right">
+
+                <img
+                    src="assets/sprites/Ethan.png"
+                    alt="Ethan"
+                    class="character-image"
+                >
+
+            </div>
+
+        </section>
+
+      <!-- ================================================= -->
+      <!-- SYSTEM INFORMATION -->
+      <!-- ================================================= -->
+
+      <aside class="system-panel hud-panel">
+        <span class="corner top-left"></span>
+
+        <span class="corner top-right"></span>
+
+        <span class="corner bottom-left"></span>
+
+        <span class="corner bottom-right"></span>
+
+        <h2>SYSTEM INFO</h2>
+
+        <div class="system-stat">
+          <div class="stat-information">
+            <span>CPU</span>
+
+            <strong id="cpu-value"> 87% </strong>
+          </div>
+
+          <div class="progress">
+            <span id="cpu-bar" style="width: 87%"></span>
+          </div>
+        </div>
+
+        <div class="system-stat">
+          <div class="stat-information">
+            <span>MEMORY</span>
+
+            <strong id="memory-value"> 42% </strong>
+          </div>
+
+          <div class="progress">
+            <span id="memory-bar" style="width: 42%"></span>
+          </div>
+        </div>
+
+        <div class="system-stat">
+          <div class="stat-information">
+            <span>STORAGE</span>
+
+            <strong> 65% </strong>
+          </div>
+
+          <div class="progress">
+            <span style="width: 65%"></span>
+          </div>
+        </div>
+
+        <div class="version">
+          <span>VERSION</span>
+
+          <strong>ALPHA 1.0.0</strong>
+        </div>
+      </aside>
+
+      <!-- ================================================= -->
+      <!-- CHRONO LINK -->
+      <!-- ================================================= -->
+
+      <aside class="chrono-panel hud-panel">
+        <p>
+          CHRONO LINK :
+
+          <strong> STABLE </strong>
+        </p>
+
+        <div class="heartbeat">
+          <span></span>
+        </div>
+      </aside>
+
+      <!-- ================================================= -->
+      <!-- MESSAGE -->
+      <!-- ================================================= -->
+
+      <div class="system-message" id="system-message">
+        <span> SYSTEM </span>
+
+        <p id="message-text">TIMELINE INTERFACE READY</p>
+      </div>
+    </main>
+
+    
+
+
+    <!-- ================================================= -->
+    <!-- CHAPTER DATABASE -->
+    <!-- ================================================= -->
+
+    <section
+        id="chapter-screen"
+        class="screen sub-screen"
+    >
+
+        <div class="database-window">
+
+            <header class="database-header">
+
+                <div>
+
+                    <p class="database-code">
+
+                        TIMELINE ARCHIVE // DATABASE
+
+                    </p>
+
+                    <h2>
+
+                        CHAPTER DATABASE
+
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="back-button"
+                    data-back
+                >
+
+                    ← RETURN
+
+                </button>
+
+            </header>
+
+
+            <div class="chapter-grid">
+
+
+                <button class="chapter-card unlocked">
+
+                    <span>
+
+                        CHAPTER 00
+
+                    </span>
+
+                    <h3>
+
+                        PROLOGUE
+
+                    </h3>
+
+                    <p>
+
+                        THE BEGINNING OF THE TIMELINE
+
+                    </p>
+
+                </button>
+
+
+                <button class="chapter-card unlocked">
+
+                    <span>
+
+                        CHAPTER 01
+
+                    </span>
+
+                    <h3>
+
+                        FIRST CONTACT
+
+                    </h3>
+
+                    <p>
+
+                        TIMELINE DATA AVAILABLE
+
+                    </p>
+
+                </button>
+
+
+                <button class="chapter-card locked">
+
+                    <span>
+
+                        CHAPTER 02
+
+                    </span>
+
+                    <h3>
+
+                        █████████
+
+                    </h3>
+
+                    <p>
+
+                        ACCESS DENIED
+
+                    </p>
+
+                </button>
+
+
+                <button class="chapter-card locked">
+
+                    <span>
+
+                        CHAPTER 03
+
+                    </span>
+
+                    <h3>
+
+                        █████████
+
+                    </h3>
+
+                    <p>
+
+                        ACCESS DENIED
+
+                    </p>
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- CHARACTER DATABASE -->
+    <!-- ================================================= -->
+
+    <section
+        id="character-screen"
+        class="screen sub-screen"
+    >
+
+        <div class="database-window">
+
+            <header class="database-header">
+
+                <div>
+
+                    <p class="database-code">
+
+                        X-TECH // PERSONNEL ARCHIVE
+
+                    </p>
+
+                    <h2>
+
+                        CHARACTER FILES
+
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="back-button"
+                    data-back
+                >
+
+                    ← RETURN
+
+                </button>
+
+            </header>
+
+
+            <div class="character-grid">
+
+
+                <article class="character-card">
+
+                    <div class="character-image">
+
+                        NO IMAGE
+
+                    </div>
+
+
+                    <span>
+
+                        FILE // 001
+
+                    </span>
+
+
+                    <h3>
+
+                        RACHEL
+
+                    </h3>
+
+
+                    <p>
+
+                        STATUS: ACTIVE
+
+                    </p>
+
+                </article>
+
+
+                <article class="character-card">
+
+                    <div class="character-image">
+
+                        NO IMAGE
+
+                    </div>
+
+
+                    <span>
+
+                        FILE // 002
+
+                    </span>
+
+
+                    <h3>
+
+                        ETHAN
+
+                    </h3>
+
+
+                    <p>
+
+                        STATUS: ACTIVE
+
+                    </p>
+
+                </article>
+
+
+                <article class="character-card locked">
+
+                    <div class="character-image">
+
+                        ?
+
+                    </div>
+
+
+                    <span>
+
+                        FILE // ???
+
+                    </span>
+
+
+                    <h3>
+
+                        UNKNOWN
+
+                    </h3>
+
+
+                    <p>
+
+                        DATA ENCRYPTED
+
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- ACHIEVEMENT SCREEN -->
+    <!-- ================================================= -->
+
+    <section
+        id="achievement-screen"
+        class="screen sub-screen"
+    >
+
+        <div class="database-window">
+
+            <header class="database-header">
+
+                <div>
+
+                    <p class="database-code">
+
+                        PLAYER RECORD // SYSTEM LOG
+
+                    </p>
+
+                    <h2>
+
+                        ACHIEVEMENT LOG
+
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="back-button"
+                    data-back
+                >
+
+                    ← RETURN
+
+                </button>
+
+            </header>
+
+
+            <div class="achievement-list">
+
+
+                <article class="achievement-item unlocked">
+
+                    <span class="achievement-icon">
+
+                        ◆
+
+                    </span>
+
+
+                    <div>
+
+                        <h3>
+
+                            TIMELINE INITIALIZED
+
+                        </h3>
+
+                        <p>
+
+                            Start CTRL+Z for the first time.
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="achievement-item locked">
+
+                    <span class="achievement-icon">
+
+                        ?
+
+                    </span>
+
+
+                    <div>
+
+                        <h3>
+
+                            LOCKED RECORD
+
+                        </h3>
+
+                        <p>
+
+                            Continue the story to unlock this record.
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- SETTINGS -->
+    <!-- ================================================= -->
+
+    <section
+        id="settings-screen"
+        class="screen sub-screen"
+    >
+
+        <div class="database-window settings-window">
+
+            <header class="database-header">
+
+                <div>
+
+                    <p class="database-code">
+
+                        SYSTEM CONFIGURATION
+
+                    </p>
+
+                    <h2>
+
+                        SETTINGS
+
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="back-button"
+                    data-back
+                >
+
+                    ← RETURN
+
+                </button>
+
+            </header>
+
+
+            <div class="settings-list">
+
+
+                <label class="setting-row">
+
+                    <span>
+
+                        MUSIC VOLUME
+
+                    </span>
+
+
+                    <input
+                        id="music-volume"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="70"
+                    >
+
+                    <output id="music-output">
+
+                        70%
+
+                    </output>
+
+                </label>
+
+
+                <label class="setting-row">
+
+                    <span>
+
+                        SOUND VOLUME
+
+                    </span>
+
+
+                    <input
+                        id="sound-volume"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="80"
+                    >
+
+                    <output id="sound-output">
+
+                        80%
+
+                    </output>
+
+                </label>
+
+
+                <label class="setting-row">
+
+                    <span>
+
+                        TEXT SPEED
+
+                    </span>
+
+
+                    <input
+                        id="text-speed"
+                        type="range"
+                        min="10"
+                        max="100"
+                        value="50"
+                    >
+
+                    <output id="speed-output">
+
+                        50%
+
+                    </output>
+
+                </label>
+
+
+            </div>
+
+        </div>
+
+        </section>
+
+        <script src="script.js"></script>
+    </body>
+</html>
