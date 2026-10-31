@@ -18,7 +18,7 @@ const story = [
 
         sprite:
 
-            "../assets/sprite/Liam.png"
+            "../assets/sprites/Liam.png"
 
     },
 
@@ -34,7 +34,7 @@ const story = [
 
         sprite:
 
-            "../assets/sprite/Liam.png"
+            "../assets/sprites/Liam.png"
 
     },
 
@@ -89,7 +89,7 @@ const story = [
 
         sprite:
 
-            "../assets/sprite/Liam.png"
+            "../assets/sprites/Liam.png"
 
     },
 
@@ -105,7 +105,7 @@ const story = [
 
         sprite:
 
-            "../assets/sprite/Liam.png"
+            "../assets/sprites/Liam.png"
 
     }
 

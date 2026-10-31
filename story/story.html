@@ -28,189 +28,107 @@
 
 <body>
 
-
     <!-- ================================================== -->
-    <!-- VISUAL NOVEL -->
+    <!-- 16:9 GAME CONTAINER -->
     <!-- ================================================== -->
 
-    <main
-        id="visual-novel"
-        class="visual-novel"
-    >
-
+    <div id="game-container">
 
         <!-- ============================================== -->
-        <!-- BACKGROUND -->
+        <!-- VISUAL NOVEL -->
         <!-- ============================================== -->
 
-        <div
-            id="scene-background"
-            class="scene-background"
-        ></div>
-
-
-        <!-- ============================================== -->
-        <!-- CINEMATIC OVERLAY -->
-        <!-- ============================================== -->
-
-        <div class="scene-vignette"></div>
-
-        <div class="scene-scanlines"></div>
-
-
-        <!-- ============================================== -->
-        <!-- CHARACTER STAGE -->
-        <!-- ============================================== -->
-
-        <section class="character-stage">
-
-
-            <img
-
-                id="character-sprite"
-
-                class="character-sprite"
-
-                src="../assets/sprite/Liam.png"
-
-                alt="Liam"
-
-            >
-
-
-        </section>
-
-                <!-- ====================================== -->
-                <!-- CHOICE -->
-                <!-- ====================================== -->
-
-                <aside
-
-                    id="choice-panel"
-
-                    class="choice-panel hidden"
-
-                >
-
-
-                    <div
-
-                        id="choice-list"
-
-                        class="choice-list"
-
-                    ></div>
-
-
-                </aside>
-        <!-- ============================================== -->
-        <!-- STORY HUD -->
-        <!-- ============================================== -->
-            <header class="speaker-nameplate">
-
-
-                <span class="name-decoration">
-
-                    //
-
-                </span>
-
-
-                <h1 id="speaker-name">
-
-                    LIAM
-
-                </h1>
-
-
-                <span class="speaker-status">
-
-                    LINKED
-
-                </span>
-
-
-            </header>
-            
-        <section
-
-            id="story-interface"
-
-            class="story-interface"
-
+        <main
+            id="visual-novel"
+            class="visual-novel"
         >
 
-
             <!-- ========================================== -->
-            <!-- NAMEPLATE -->
-            <!-- ========================================== -->
-
-
-
-            <!-- ========================================== -->
-            <!-- DIALOGUE AND CHOICE -->
+            <!-- BACKGROUND -->
             <!-- ========================================== -->
 
-            <div class="story-content">
+            <div
+                id="scene-background"
+                class="scene-background"
+            ></div>
 
 
-                <!-- ====================================== -->
-                <!-- DIALOGUE -->
-                <!-- ====================================== -->
+            <!-- ========================================== -->
+            <!-- CINEMATIC OVERLAY -->
+            <!-- ========================================== -->
 
-                <article class="dialogue-panel">
+            <div class="scene-vignette"></div>
 
-
-                    <div class="dialogue-header">
-
-
-                        <span>
-
-                            TIMELINE COMMUNICATION
-
-                        </span>
+            <div class="scene-scanlines"></div>
 
 
-                        <span id="dialogue-code">
+            <!-- ========================================== -->
+            <!-- CHARACTER STAGE -->
+            <!-- ========================================== -->
 
-                            LOG // 0001
+            <section class="character-stage">
 
-                        </span>
+                <img
+                    id="character-sprite"
+                    class="character-sprite"
+                    src="../game/assets/sprites/Liam.png"
+                    alt="Character"
+                >
 
-
-                    </div>
-
-
-                    <p
-
-                        id="dialogue-text"
-
-                        class="dialogue-text"
-
-                    >
-
-                        Click anywhere to initialize
-                        the timeline...
-
-                    </p>
+            </section>
 
 
-                    <span
+            <!-- ========================================== -->
+            <!-- CHOICE -->
+            <!-- ========================================== -->
 
-                        id="continue-indicator"
+            <aside
+                id="choice-panel"
+                class="choice-panel hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-hidden="true"
+            >
 
-                        class="continue-indicator"
+                <div class="choice-heading">
 
-                    >
-
-                        ▼
-
+                    <span class="choice-code">
+                        DECISION // TIMELINE
                     </span>
 
+                    <h2>
+                        PILIHAN
+                    </h2>
 
-                </article>
+                </div>
 
-            </div>
+                <div
+                    id="choice-list"
+                    class="choice-list"
+                ></div>
+
+            </aside>
+
+
+            <!-- ========================================== -->
+            <!-- STORY HUD -->
+            <!-- ========================================== -->
+
+            <header class="speaker-nameplate nameplate-hidden">
+
+                <span class="name-decoration">
+                    //
+                </span>
+
+                <h1 id="speaker-name">
+                    LIAM
+                </h1>
+
+                <span class="speaker-status">
+                    LINKED
+                </span>
+
+            </header>
 
 
             <!-- ========================================== -->
@@ -219,195 +137,572 @@
 
             <nav class="quick-menu">
 
-
                 <button
-
                     class="quick-button"
-
-                    data-command="log"
-
+                    type="button"
+                    data-action="log"
                 >
-
-                    <span>
-
-                        ▤
-
-                    </span>
-
+                    <span>▤</span>
                     LOG
-
                 </button>
 
+                <button
+                    class="quick-button"
+                    type="button"
+                    data-action="rollback"
+                >
+                    <span>↶</span>
+                    ROLLBACK
+                </button>
 
                 <button
-
                     id="auto-button"
-
                     class="quick-button"
-
-                    data-command="auto"
-
+                    type="button"
+                    data-action="auto"
                 >
-
-                    <span>
-
-                        ▷
-
-                    </span>
-
+                    <span>▷</span>
                     AUTO
-
                 </button>
 
-
                 <button
-
                     id="skip-button"
-
                     class="quick-button"
-
-                    data-command="skip"
-
+                    type="button"
+                    data-action="skip"
                 >
-
-                    <span>
-
-                        ≫
-
-                    </span>
-
+                    <span>≫</span>
                     SKIP
-
                 </button>
 
-
                 <button
-
                     class="quick-button"
-
-                    data-command="save"
-
+                    type="button"
+                    data-action="save"
                 >
-
-                    <span>
-
-                        ▣
-
-                    </span>
-
+                    <span>▣</span>
                     SAVE
-
                 </button>
 
-
                 <button
-
                     class="quick-button"
-
-                    data-command="load"
-
+                    type="button"
+                    data-action="load"
                 >
-
-                    <span>
-
-                        ⇧
-
-                    </span>
-
+                    <span>⇧</span>
                     LOAD
-
                 </button>
 
-
                 <button
-
                     class="quick-button"
-
-                    data-command="menu"
-
+                    type="button"
+                    data-action="menu"
                 >
-
-                    <span>
-
-                        ⚙
-
-                    </span>
-
+                    <span>⚙</span>
                     MENU
-
                 </button>
-
 
                 <button
-
+                    id="config-button"
                     class="quick-button"
-
-                    data-command="config"
-
+                    type="button"
+                    data-action="config"
                 >
-
-                    <span>
-
-                        ☷
-
-                    </span>
-
+                    <span>☷</span>
                     CONFIG
-
                 </button>
-
 
             </nav>
 
+
+            <!-- ========================================== -->
+            <!-- DIALOGUE -->
+            <!-- ========================================== -->
+
+            <section
+                id="story-interface"
+                class="story-interface"
+            >
+
+                <div class="story-content">
+
+                    <article class="dialogue-panel">
+
+                        <div class="dialogue-header">
+
+                            <span>
+                                TIMELINE COMMUNICATION
+                            </span>
+
+                            <span id="dialogue-code">
+                                LOG // 0001
+                            </span>
+
+                        </div>
+
+                        <p
+                            id="dialogue-text"
+                            class="dialogue-text"
+                        >
+                            Click anywhere to initialize
+                            the timeline...
+                        </p>
+
+                        <span
+                            id="continue-indicator"
+                            class="continue-indicator"
+                        >
+                            ▼
+                        </span>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- ========================================== -->
+            <!-- SYSTEM MESSAGE -->
+            <!-- ========================================== -->
+
+            <aside
+                id="system-notification"
+                class="system-notification"
+                aria-live="polite"
+            >
+
+                <strong>
+                    SYSTEM
+                </strong>
+
+                <span id="notification-text">
+                    TIMELINE INITIALIZED
+                </span>
+
+            </aside>
+
+        </main>
+
+
+        <!-- ============================================== -->
+        <!-- SCREEN EFFECTS -->
+        <!-- ============================================== -->
+
+        <div
+            id="fx-flash"
+            class="fx-flash"
+            aria-hidden="true"
+        ></div>
+
+        <div
+            id="fx-glitch"
+            class="fx-glitch"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- ============================================== -->
+        <!-- DIALOGUE LOG OVERLAY -->
+        <!-- ============================================== -->
+
+        <section
+            id="log-overlay"
+            class="log-overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+        >
+
+            <div class="log-window">
+
+                <header class="log-header">
+
+                    <div>
+
+                        <p class="log-code">
+                            TIMELINE ARCHIVE // DIALOGUE
+                        </p>
+
+                        <h2>
+                            DIALOGUE LOG
+                        </h2>
+
+                    </div>
+
+                    <div class="log-actions">
+
+                        <button
+                            id="log-rollback-button"
+                            class="back-button"
+                            type="button"
+                        >
+                            ↶ ROLLBACK
+                        </button>
+
+                        <button
+                            id="close-log-button"
+                            class="back-button"
+                            type="button"
+                        >
+                            ← CLOSE
+                        </button>
+
+                    </div>
+
+                </header>
+
+                <div
+                    id="log-list"
+                    class="log-list"
+                ></div>
+
+            </div>
 
         </section>
 
 
         <!-- ============================================== -->
-        <!-- SYSTEM MESSAGE -->
+        <!-- SETTINGS OVERLAY -->
         <!-- ============================================== -->
 
-        <aside
-
-            id="system-notification"
-
-            class="system-notification"
-
+        <section
+            id="settings-screen"
+            class="sub-screen"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
         >
 
+            <div class="database-window settings-window">
 
-            <strong>
+                <header class="database-header">
 
-                SYSTEM
+                    <div>
 
-            </strong>
+                        <p class="database-code">
+                            SYSTEM CONFIGURATION
+                        </p>
+
+                        <h2>
+                            SETTINGS
+                        </h2>
+
+                    </div>
+
+                    <button
+                        class="back-button"
+                        type="button"
+                        data-close-settings
+                    >
+                        ← RETURN
+                    </button>
+
+                </header>
 
 
-            <span
+                <div class="settings-list">
 
-                id="notification-text"
+                    <label class="setting-row">
 
-            >
+                        <span>
+                            MUSIC VOLUME
+                        </span>
 
-                TIMELINE INITIALIZED
+                        <input
+                            id="music-volume"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="70"
+                        >
 
-            </span>
+                        <output id="music-output">
+                            70%
+                        </output>
+
+                    </label>
 
 
-        </aside>
+                    <label class="setting-row">
+
+                        <span>
+                            SOUND VOLUME
+                        </span>
+
+                        <input
+                            id="sound-volume"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="80"
+                        >
+
+                        <output id="sound-output">
+                            80%
+                        </output>
+
+                    </label>
 
 
-    </main>
+                    <label class="setting-row">
+
+                        <span>
+                            TEXT SPEED
+                        </span>
+
+                        <input
+                            id="text-speed"
+                            type="range"
+                            min="10"
+                            max="100"
+                            value="50"
+                        >
+
+                        <output id="speed-output">
+                            50%
+                        </output>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
-    <!-- JavaScript khusus Story Runtime -->
+        <!-- ============================================== -->
+        <!-- INTRODUCTION / HOW TO PLAY -->
+        <!-- ============================================== -->
 
-    <script
+        <section
+            id="intro-overlay"
+            class="intro-overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+        >
 
-        src="../js/story.js"
+            <div class="intro-window">
 
-    ></script>
+                <p class="intro-code">
+                    SYSTEM ARCHIVE // MANUAL
+                </p>
 
+                <h2 id="intro-title">
+                    HOW TO PLAY
+                </h2>
+
+                <div
+                    id="intro-body"
+                    class="intro-body"
+                ></div>
+
+                <button
+                    id="intro-continue"
+                    class="primary-button"
+                    type="button"
+                >
+                    MULAI TIMELINE →
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- COMING SOON / GLITCH END -->
+        <!-- ============================================== -->
+
+        <section
+            id="coming-soon-overlay"
+            class="coming-soon-overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+        >
+
+            <div class="coming-soon-window">
+
+                <p class="coming-soon-code">
+                    SIGNAL INTERRUPTED
+                </p>
+
+                <h2
+                    id="coming-soon-title"
+                    class="glitch-text"
+                    data-text="TO BE CONTINUED"
+                >
+                    TO BE CONTINUED
+                </h2>
+
+                <p
+                    id="coming-soon-subtitle"
+                    class="coming-soon-subtitle"
+                >
+                    SIGNAL // END OF TRANSMISSION
+                </p>
+
+                <div class="coming-soon-actions">
+
+                    <button
+                        id="coming-soon-replay"
+                        class="back-button"
+                        type="button"
+                    >
+                        ↻ ULANGI
+                    </button>
+
+                    <button
+                        id="coming-soon-menu"
+                        class="primary-button"
+                        type="button"
+                    >
+                        KEMBALI KE MENU
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- HACKING MINIGAME -->
+        <!-- ============================================== -->
+
+        <section
+            id="hack-modal"
+            class="hack-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+        >
+
+            <div class="hack-window">
+
+                <p class="hack-code-line">
+                    X-TECH TERMINAL // AUTHORIZATION REQUIRED
+                </p>
+
+                <h2>
+                    SYSTEM BREACH
+                </h2>
+
+                <p class="hack-instruction">
+                    Kode otorisasi berhasil dicegat. Ketik ulang kode
+                    di bawah ini untuk membuka akses.
+                </p>
+
+                <div class="hack-code-panel">
+
+                    <span class="hack-code-label">
+                        AUTHORIZATION CODE
+                    </span>
+
+                    <code id="hack-code"></code>
+
+                </div>
+
+                <label
+                    class="hack-input-row"
+                    for="hack-input"
+                >
+                    <span id="hack-prompt">
+                        &gt;&gt; MASUKKAN KODE OTORISASI:
+                    </span>
+
+                    <input
+                        id="hack-input"
+                        type="text"
+                        autocomplete="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        maxlength="64"
+                    >
+                </label>
+
+                <p
+                    id="hack-feedback"
+                    class="hack-feedback"
+                    data-state="idle"
+                >
+                    // SISTEM MENUNGGU OTORISASI
+                </p>
+
+                <div class="hack-actions">
+
+                    <button
+                        id="hack-abort"
+                        class="back-button"
+                        type="button"
+                    >
+                        ← ABORT
+                    </button>
+
+                    <button
+                        id="hack-submit"
+                        class="primary-button"
+                        type="button"
+                    >
+                        AUTHORIZE →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CTRL+Z VN ENGINE -->
+    <!-- ================================================= -->
+
+    <script src="../engine/systems/transition-system.js"></script>
+
+    <script src="../engine/systems/save-system.js"></script>
+
+    <script src="../game/config/variables.js"></script>
+
+    <script src="../game/config/chapters.js"></script>
+
+    <script src="../engine/ui/story-ui.js"></script>
+
+    <script src="../engine/core/vn-engine.js"></script>
+
+
+    <!-- ================================================= -->
+    <!-- GAME CONFIGURATION -->
+    <!-- ================================================= -->
+
+    <script src="../game/config/backgrounds.js"></script>
+
+    <script src="../game/config/characters.js"></script>
+
+
+    <!-- ================================================= -->
+    <!-- STORY -->
+    <!-- ================================================= -->
+
+    <script src="../game/story/introduction.js"></script>
+
+    <script src="../game/story/bab0.js"></script>
+
+    <script src="../game/story/bab1.js"></script>
+
+    <script src="../game/story/bab2.js"></script>
+
+    <script src="../game/story/bab3.js"></script>
+
+    <script src="../game/story/bab4.js"></script>
+
+    <script src="../game/story/bab5.js"></script>
 
 </body>
 

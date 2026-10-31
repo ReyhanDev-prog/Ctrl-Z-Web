@@ -2,16 +2,22 @@
 
 
 /* ========================================================= */
+/* CONSTANTS */
+/* ========================================================= */
+
+const SAVE_KEY =
+    "ctrlz-vn-save";
+
+
+/* ========================================================= */
 /* CLOCK */
 /* ========================================================= */
 
 const clockElement =
     document.getElementById("clock");
 
-
 const dayElement =
     document.getElementById("day");
-
 
 const dateElement =
     document.getElementById("date");
@@ -23,19 +29,16 @@ function updateClock() {
         new Date();
 
 
-    const time =
-
-        currentDate
-            .toLocaleTimeString(
-                "en-GB",
-                {
-                    hour12: false
-                }
-            );
+    clockElement.textContent =
+        currentDate.toLocaleTimeString(
+            "en-GB",
+            {
+                hour12: false
+            }
+        );
 
 
-    const day =
-
+    dayElement.textContent =
         currentDate
             .toLocaleDateString(
                 "en-US",
@@ -46,38 +49,22 @@ function updateClock() {
             .toUpperCase();
 
 
-    const date =
-
+    dateElement.textContent =
         currentDate
             .toLocaleDateString(
                 "en-US",
                 {
                     day: "2-digit",
-
                     month: "long",
-
                     year: "numeric"
                 }
             )
             .toUpperCase();
 
-
-    clockElement.textContent =
-        time;
-
-
-    dayElement.textContent =
-        day;
-
-
-    dateElement.textContent =
-        date;
-
 }
 
 
 updateClock();
-
 
 setInterval(
     updateClock,
@@ -90,25 +77,22 @@ setInterval(
 /* ========================================================= */
 
 const messagePanel =
-
-    document
-        .getElementById(
-            "system-message"
-        );
-
+    document.getElementById("system-message");
 
 const messageText =
-
-    document
-        .getElementById(
-            "message-text"
-        );
-
+    document.getElementById("message-text");
 
 let messageTimer;
 
 
-function showMessage(message) {
+function showMessage(message, type = "info") {
+
+    if (!messagePanel || !messageText) {
+
+        return;
+
+    }
+
 
     clearTimeout(
         messageTimer
@@ -119,22 +103,26 @@ function showMessage(message) {
         message;
 
 
-    messagePanel
-        .classList
-        .add("show");
+    messagePanel.classList.toggle(
+        "error",
+        type === "error"
+    );
+
+
+    messagePanel.classList.add(
+        "show"
+    );
 
 
     messageTimer =
-
-        setTimeout(
+        window.setTimeout(
             () => {
 
-                messagePanel
-                    .classList
-                    .remove("show");
+                messagePanel.classList.remove(
+                    "show"
+                );
 
             },
-
             2200
         );
 
@@ -142,419 +130,53 @@ function showMessage(message) {
 
 
 /* ========================================================= */
-/* MENU ACTIONS */
+/* SCREEN NAVIGATION */
 /* ========================================================= */
-
-const menuActions = {
-
-    start:
-
-        "INITIALIZING NEW TIMELINE...",
-
-
-    continue:
-
-        "SEARCHING FOR TIMELINE DATA...",
-
-
-    chapter:
-
-        "OPENING CHAPTER DATABASE...",
-
-
-    character:
-
-        "ACCESSING CHARACTER FILES...",
-
-
-    achievement:
-
-        "LOADING ACHIEVEMENT LOG...",
-
-
-    settings:
-
-        "OPENING SYSTEM SETTINGS...",
-
-
-    exit:
-
-        "TERMINATION REQUEST RECEIVED..."
-
-};
-
-
-const buttons =
-
-    document
-        .querySelectorAll(
-            ".menu-button"
-        );
-
-
-buttons.forEach(
-
-    button => {
-
-
-        button.addEventListener(
-
-            "mouseenter",
-
-            () => {
-
-                buttons.forEach(
-
-                    item =>
-
-                        item.classList
-                            .remove("active")
-
-                );
-
-
-                button
-                    .classList
-                    .add("active");
-
-            }
-
-        );
-
-
-        button.addEventListener(
-
-            "click",
-
-            () => {
-
-                const action =
-
-                    button
-                        .dataset
-                        .action;
-
-
-                showMessage(
-
-                    menuActions[action]
-
-                );
-
-            }
-
-        );
-
-        // If this is the Start button, navigate to the story page
-        button.addEventListener(
-            "click",
-            () => {
-                const action = button.dataset.action;
-
-                if (action === "start") {
-                    window.location.href = "story/story.html";
-                }
-            }
-        );
-
-    }
-
-);
-
-
-/* ========================================================= */
-/* DYNAMIC SYSTEM INFORMATION */
-/* ========================================================= */
-
-const cpuValue =
-
-    document
-        .getElementById(
-            "cpu-value"
-        );
-
-
-const cpuBar =
-
-    document
-        .getElementById(
-            "cpu-bar"
-        );
-
-
-const memoryValue =
-
-    document
-        .getElementById(
-            "memory-value"
-        );
-
-
-const memoryBar =
-
-    document
-        .getElementById(
-            "memory-bar"
-        );
-
-
-function randomSystemValue(
-
-    minimum,
-    maximum
-
-) {
-
-    return Math.floor(
-
-        Math.random()
-
-        *
-
-        (
-            maximum
-            -
-            minimum
-            +
-            1
-        )
-
-        +
-
-        minimum
-
-    );
-
-}
-
-
-function updateSystemInformation() {
-
-    const cpu =
-
-        randomSystemValue(
-            20,
-            92
-        );
-
-
-    const memory =
-
-        randomSystemValue(
-            29,
-            87
-        );
-
-
-    cpuValue.textContent =
-
-        `${cpu}%`;
-
-
-    cpuBar.style.width =
-
-        `${cpu}%`;
-
-
-    memoryValue.textContent =
-
-        `${memory}%`;
-
-
-    memoryBar.style.width =
-
-        `${memory}%`;
-
-}
-
-
-setInterval(
-
-    updateSystemInformation,
-
-    2500
-
-);
-
-
-/* ========================================================= */
-/* KEYBOARD NAVIGATION */
-/* ========================================================= */
-
-let selectedIndex = 0;
-
-
-document.addEventListener(
-
-    "keydown",
-
-    event => {
-
-
-        if (
-
-            event.key
-            ===
-            "ArrowDown"
-
-        ) {
-
-            selectedIndex =
-
-                (
-                    selectedIndex
-                    +
-                    1
-                )
-
-                %
-
-                buttons.length;
-
-        }
-
-
-        else if (
-
-            event.key
-            ===
-            "ArrowUp"
-
-        ) {
-
-            selectedIndex =
-
-                (
-                    selectedIndex
-                    -
-                    1
-                    +
-                    buttons.length
-                )
-
-                %
-
-                buttons.length;
-
-        }
-
-
-        else if (
-
-            event.key
-            ===
-            "Enter"
-
-        ) {
-
-            buttons[
-                selectedIndex
-            ]
-            .click();
-
-        }
-
-
-        else {
-
-            return;
-
-        }
-
-
-        buttons.forEach(
-
-            button =>
-
-                button
-                    .classList
-                    .remove("active")
-
-        );
-
-
-        buttons[
-            selectedIndex
-        ]
-        .classList
-        .add("active");
-
-    }
-
-);
-
-/* =========================================================
-   SCREEN NAVIGATION
-========================================================= */
 
 const mainMenuScreen =
     document.getElementById("main-menu-screen");
 
-
 const chapterScreen =
     document.getElementById("chapter-screen");
-
 
 const characterScreen =
     document.getElementById("character-screen");
 
-
 const achievementScreen =
     document.getElementById("achievement-screen");
-
 
 const settingsScreen =
     document.getElementById("settings-screen");
 
 
-const allScreens = [
+const allScreens =
+    [
+        mainMenuScreen,
+        chapterScreen,
+        characterScreen,
+        achievementScreen,
+        settingsScreen
+    ].filter(Boolean);
 
-    mainMenuScreen,
-
-    chapterScreen,
-
-    characterScreen,
-
-    achievementScreen,
-
-    settingsScreen
-
-];
-
-
-/* =========================================================
-   HIDE ALL SCREENS
-========================================================= */
 
 function hideAllScreens() {
 
     allScreens.forEach(
-
         screen => {
 
-            if (screen) {
-
-                screen.classList.remove(
-                    "active-screen"
-                );
-
-            }
+            screen.classList.remove(
+                "active-screen"
+            );
 
         }
-
     );
 
 }
 
 
-/* =========================================================
-   OPEN SCREEN
-========================================================= */
-
 function openScreen(screenID) {
 
     const targetScreen =
-
         document.getElementById(
             screenID
         );
@@ -563,11 +185,8 @@ function openScreen(screenID) {
     if (!targetScreen) {
 
         console.error(
-
             "Screen tidak ditemukan:",
-
             screenID
-
         );
 
         return;
@@ -579,199 +198,771 @@ function openScreen(screenID) {
 
 
     targetScreen.classList.add(
-
         "active-screen"
-
     );
 
 }
 
-
-/* =========================================================
-   RETURN TO MAIN MENU
-========================================================= */
 
 function returnToMainMenu() {
 
     hideAllScreens();
 
 
-    mainMenuScreen.classList.add(
+    if (mainMenuScreen) {
 
-        "active-screen"
+        mainMenuScreen.classList.add(
+            "active-screen"
+        );
 
+    }
+
+}
+
+
+/* ========================================================= */
+/* CHAPTER DATABASE */
+/* ========================================================= */
+
+function chapterIsUnlocked(chapter) {
+
+    if (typeof window.getChapterUnlocked === "function") {
+        return window.getChapterUnlocked(chapter);
+    }
+
+
+    return Boolean(
+        window.GameState
+        && window.GameState.persistent
+        && window.GameState.persistent.unlocks
+        && window.GameState.persistent.unlocks.bab[String(chapter.id)]
     );
 
 }
 
 
-/* =========================================================
-   MENU BUTTON
-========================================================= */
+function renderChapters() {
 
-document
-    .querySelector(
-        '[data-action="chapter"]'
-    )
-    .addEventListener(
-
-        "click",
-
-        function () {
-
-            openScreen(
-
-                "chapter-screen"
-
-            );
-
-        }
-
-    );
+    const grid =
+        document.getElementById("chapter-grid");
 
 
-document
-    .querySelector(
-        '[data-action="character"]'
-    )
-    .addEventListener(
-
-        "click",
-
-        function () {
-
-            openScreen(
-
-                "character-screen"
-
-            );
-
-        }
-
-    );
+    if (!grid) {
+        return;
+    }
 
 
-document
-    .querySelector(
-        '[data-action="achievement"]'
-    )
-    .addEventListener(
+    if (!Array.isArray(window.CHAPTERS)) {
 
-        "click",
+        grid.replaceChildren();
 
-        function () {
+        const error =
+            document.createElement("p");
 
-            openScreen(
+        error.className = "chapter-empty";
+        error.textContent = "CHAPTER DATABASE UNAVAILABLE";
 
-                "achievement-screen"
+        grid.appendChild(error);
 
-            );
-
-        }
-
-    );
+        return;
+    }
 
 
-document
-    .querySelector(
-        '[data-action="settings"]'
-    )
-    .addEventListener(
+    grid.replaceChildren();
 
-        "click",
 
-        function () {
+    window.CHAPTERS.forEach(
+        chapter => {
 
-            openScreen(
+            const unlocked =
+                chapterIsUnlocked(chapter);
 
-                "settings-screen"
 
-            );
+            const card =
+                document.createElement("button");
+
+            card.type = "button";
+            card.className =
+                `chapter-card ${unlocked ? "unlocked" : "locked"}`;
+
+            card.dataset.chapter = String(chapter.id);
+            card.disabled = !unlocked;
+
+
+            const number =
+                document.createElement("span");
+
+            number.textContent =
+                `CHAPTER ${chapter.number}`;
+
+
+            const title =
+                document.createElement("h3");
+
+            title.textContent =
+                unlocked
+                    ? chapter.title
+                    : "█████████";
+
+
+            const description =
+                document.createElement("p");
+
+            description.textContent =
+                unlocked
+                    ? chapter.description
+                    : "ACCESS DENIED";
+
+
+            card.append(number, title, description);
+
+            grid.appendChild(card);
 
         }
-
     );
 
+}
 
-/* =========================================================
-   RETURN BUTTONS
-========================================================= */
 
-const returnButtons =
+function openChapter(chapterID) {
 
-    document.querySelectorAll(
+    const chapter =
+        typeof window.getChapter === "function"
+            ? window.getChapter(chapterID)
+            : null;
 
-        ".back-button"
 
+    if (!chapter) {
+        showMessage("CHAPTER DATA NOT FOUND", "error");
+        return;
+    }
+
+
+    if (!chapterIsUnlocked(chapter)) {
+
+        showMessage("ACCESS DENIED — CHAPTER LOCKED", "error");
+
+        return;
+    }
+
+
+    showMessage(`LOADING CHAPTER ${chapter.number}...`);
+
+
+    window.setTimeout(
+        () => {
+
+            window.location.href =
+                `story/story.html?chapter=${encodeURIComponent(chapter.id)}`;
+
+        },
+        200
     );
 
+}
 
-returnButtons.forEach(
 
-    button => {
+document
+    .getElementById("chapter-grid")
+    ?.addEventListener(
+        "click",
 
-        button.addEventListener(
+        event => {
 
-            "click",
+            const card =
+                event.target.closest(".chapter-card");
 
-            function () {
 
-                returnToMainMenu();
-
+            if (!card || card.disabled) {
+                return;
             }
 
+
+            openChapter(card.dataset.chapter);
+
+        }
+    );
+
+
+/* ========================================================= */
+/* SAVE DETECTION */
+/* ========================================================= */
+
+function hasSaveData() {
+
+    let rawSave;
+
+
+    try {
+
+        rawSave =
+            localStorage.getItem(
+                SAVE_KEY
+            );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "localStorage tidak tersedia:",
+            error
+        );
+
+
+        return false;
+
+    }
+
+
+    if (!rawSave) {
+
+        return false;
+
+    }
+
+
+    try {
+
+        const parsed =
+            JSON.parse(
+                rawSave
+            );
+
+
+        return (
+            parsed
+            &&
+            typeof parsed
+            ===
+            "object"
         );
 
     }
 
-);
+    catch (error) {
+
+        console.warn(
+            "Save data tidak valid:",
+            error
+        );
 
 
-/* =========================================================
-   ESCAPE KEY
-========================================================= */
-
-document.addEventListener(
-
-    "keydown",
-
-    function (event) {
-
-        if (
-
-            event.key === "Escape"
-
-        ) {
-
-            returnToMainMenu();
-
-        }
+        return false;
 
     }
 
+}
+
+
+/* ========================================================= */
+/* TERMINATION */
+/* ========================================================= */
+
+function showTerminationScreen() {
+
+    const terminationScreen =
+        document.getElementById(
+            "termination-screen"
+        );
+
+
+    if (terminationScreen) {
+
+        terminationScreen.classList.add(
+            "show"
+        );
+
+
+        terminationScreen.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    /*
+     * window.close() sering diblokir browser jika tab
+     * tidak dibuka oleh script. Overlay TERMINATED tetap
+     * menjadi fallback yang pasti terlihat.
+     */
+
+    window.setTimeout(
+        () => {
+
+            try {
+
+                window.close();
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    "Window tidak dapat ditutup otomatis:",
+                    error
+                );
+
+            }
+
+        },
+        600
+    );
+
+}
+
+
+/* ========================================================= */
+/* MENU ACTIONS */
+/* ========================================================= */
+
+function handleMenuAction(action) {
+
+    switch (action) {
+
+
+        case "start":
+
+            showMessage(
+                "INITIALIZING NEW TIMELINE..."
+            );
+
+
+            window.setTimeout(
+                () => {
+
+                    window.location.href =
+                        "story/story.html";
+
+                },
+                180
+            );
+
+            break;
+
+
+        case "continue":
+
+            if (!hasSaveData()) {
+
+                showMessage(
+                    "NO SAVE DATA",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            showMessage(
+                "TIMELINE DATA FOUND — RESUMING..."
+            );
+
+
+            window.setTimeout(
+                () => {
+
+                    window.location.href =
+                        "story/story.html?continue=1";
+
+                },
+                250
+            );
+
+            break;
+
+
+        case "chapter":
+
+            showMessage(
+                "OPENING CHAPTER DATABASE..."
+            );
+
+            openScreen(
+                "chapter-screen"
+            );
+
+            break;
+
+
+        case "character":
+
+            showMessage(
+                "ACCESSING CHARACTER FILES..."
+            );
+
+            openScreen(
+                "character-screen"
+            );
+
+            break;
+
+
+        case "achievement":
+
+            showMessage(
+                "LOADING ACHIEVEMENT LOG..."
+            );
+
+            openScreen(
+                "achievement-screen"
+            );
+
+            break;
+
+
+        case "settings":
+
+            showMessage(
+                "OPENING SYSTEM SETTINGS..."
+            );
+
+            openScreen(
+                "settings-screen"
+            );
+
+            break;
+
+
+        case "exit":
+
+            showMessage(
+                "TERMINATION REQUEST RECEIVED...",
+                "error"
+            );
+
+            showTerminationScreen();
+
+            break;
+
+
+        default:
+
+            console.warn(
+                `Menu action tidak dikenal: ${action}`
+            );
+
+    }
+
+}
+
+
+/* ========================================================= */
+/* MENU BUTTONS */
+/* ========================================================= */
+
+const buttons =
+    Array.from(
+        document.querySelectorAll(
+            ".menu-button"
+        )
+    );
+
+let selectedIndex =
+    0;
+
+
+function setActiveButton(index) {
+
+    selectedIndex =
+        (
+            index
+            +
+            buttons.length
+        )
+        %
+        buttons.length;
+
+
+    buttons.forEach(
+        (button, buttonIndex) => {
+
+            button.classList.toggle(
+                "active",
+                buttonIndex
+                ===
+                selectedIndex
+            );
+
+        }
+    );
+
+}
+
+
+buttons.forEach(
+    (button, index) => {
+
+        button.addEventListener(
+            "mouseenter",
+
+            () => {
+
+                setActiveButton(
+                    index
+                );
+
+            }
+        );
+
+
+        button.addEventListener(
+            "click",
+
+            () => {
+
+                handleMenuAction(
+                    button.dataset.action
+                );
+
+            }
+        );
+
+    }
 );
 
-document.addEventListener(
 
+/* ========================================================= */
+/* DYNAMIC SYSTEM INFORMATION */
+/* ========================================================= */
+
+const cpuValue =
+    document.getElementById("cpu-value");
+
+const cpuBar =
+    document.getElementById("cpu-bar");
+
+const memoryValue =
+    document.getElementById("memory-value");
+
+const memoryBar =
+    document.getElementById("memory-bar");
+
+
+function randomSystemValue(minimum, maximum) {
+
+    return Math.floor(
+        Math.random()
+        *
+        (
+            maximum
+            -
+            minimum
+            +
+            1
+        )
+        +
+        minimum
+    );
+
+}
+
+
+function updateSystemInformation() {
+
+    const cpu =
+        randomSystemValue(
+            20,
+            92
+        );
+
+
+    const memory =
+        randomSystemValue(
+            29,
+            87
+        );
+
+
+    if (cpuValue) {
+
+        cpuValue.textContent =
+            `${cpu}%`;
+
+    }
+
+
+    if (cpuBar) {
+
+        cpuBar.style.width =
+            `${cpu}%`;
+
+    }
+
+
+    if (memoryValue) {
+
+        memoryValue.textContent =
+            `${memory}%`;
+
+    }
+
+
+    if (memoryBar) {
+
+        memoryBar.style.width =
+            `${memory}%`;
+
+    }
+
+}
+
+
+updateSystemInformation();
+
+setInterval(
+    updateSystemInformation,
+    2500
+);
+
+
+/* ========================================================= */
+/* KEYBOARD NAVIGATION */
+/* ========================================================= */
+
+document.addEventListener(
     "keydown",
 
     event => {
 
+        if (!mainMenuScreen) {
+
+            return;
+
+        }
+
 
         if (
-
-            event.key
-            ===
-            "Escape"
-
+            !mainMenuScreen.classList.contains(
+                "active-screen"
+            )
         ) {
 
-            returnToMainMenu();
+            return;
+
+        }
+
+
+        if (event.key === "ArrowDown") {
+
+            event.preventDefault();
+
+            setActiveButton(
+                selectedIndex + 1
+            );
+
+        }
+
+
+        else if (event.key === "ArrowUp") {
+
+            event.preventDefault();
+
+            setActiveButton(
+                selectedIndex - 1
+            );
+
+        }
+
+
+        else if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            buttons[
+                selectedIndex
+            ]?.click();
 
         }
 
     }
+);
 
+
+/* ========================================================= */
+/* RETURN BUTTONS */
+/* ========================================================= */
+
+document
+    .querySelectorAll(
+        ".screen .back-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+
+                () => {
+
+                    returnToMainMenu();
+
+                }
+            );
+
+        }
+    );
+
+
+/* ========================================================= */
+/* REBOOT BUTTON */
+/* ========================================================= */
+
+document
+    .getElementById(
+        "reboot-button"
+    )
+    ?.addEventListener(
+        "click",
+
+        () => {
+
+            window.location.reload();
+
+        }
+    );
+
+
+/* ========================================================= */
+/* ESCAPE KEY */
+/* ========================================================= */
+
+document.addEventListener(
+    "keydown",
+
+    event => {
+
+        if (event.key !== "Escape") {
+
+            return;
+
+        }
+
+
+        const terminationScreen =
+            document.getElementById(
+                "termination-screen"
+            );
+
+
+        if (
+            terminationScreen
+            &&
+            terminationScreen.classList.contains(
+                "show"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        returnToMainMenu();
+
+    }
 );
 
 
@@ -779,68 +970,124 @@ document.addEventListener(
 /* SETTINGS */
 /* ========================================================= */
 
-function connectSlider(
-
-    sliderID,
-    outputID
-
-) {
+function connectSlider(sliderID, outputID) {
 
     const slider =
-
-        document
-            .getElementById(
-                sliderID
-            );
+        document.getElementById(
+            sliderID
+        );
 
 
     const output =
-
-        document
-            .getElementById(
-                outputID
-            );
+        document.getElementById(
+            outputID
+        );
 
 
-    slider.addEventListener(
+    if (!slider || !output) {
 
-        "input",
+        return;
 
+    }
+
+
+    const update =
         () => {
 
             output.textContent =
-
                 `${slider.value}%`;
 
-        }
+        };
 
+
+    slider.addEventListener(
+        "input",
+        update
     );
+
+
+    update();
 
 }
 
 
 connectSlider(
-
     "music-volume",
-
     "music-output"
-
 );
 
-
 connectSlider(
-
     "sound-volume",
-
     "sound-output"
-
 );
-
 
 connectSlider(
-
     "text-speed",
-
     "speed-output"
-
 );
+
+
+/* ========================================================= */
+/* GAME FRAME FALLBACK */
+/* ========================================================= */
+
+function fitGameContainerFallback() {
+
+    const container =
+        document.getElementById(
+            "game-container"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    const supportsTrigonometricScale =
+        window.CSS
+        &&
+        CSS.supports
+        &&
+        CSS.supports(
+            "transform",
+            "scale(tan(atan2(1px, 1px)))"
+        );
+
+
+    if (supportsTrigonometricScale) {
+
+        return;
+
+    }
+
+
+    const scale =
+        Math.min(
+            window.innerWidth / 1920,
+            window.innerHeight / 1080
+        );
+
+
+    container.style.transform =
+        `translate(-50%, -50%) scale(${scale})`;
+
+}
+
+
+window.addEventListener(
+    "resize",
+    fitGameContainerFallback
+);
+
+
+fitGameContainerFallback();
+
+
+/* ========================================================= */
+/* INITIAL RENDER */
+/* ========================================================= */
+
+renderChapters();

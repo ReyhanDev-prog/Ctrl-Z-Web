@@ -11,6 +11,13 @@
   </head>
 
   <body>
+
+    <!-- ===================================================== -->
+    <!-- 16:9 GAME CONTAINER -->
+    <!-- ===================================================== -->
+
+    <div id="game-container">
+
     <!-- ===================================================== -->
     <!-- BACKGROUND -->
     <!-- ===================================================== -->
@@ -169,52 +176,6 @@
         </section>
       </section>
 
-        <!-- ================================================= -->
-        <!-- CHARACTER AREA -->
-        <!-- ================================================= -->
-
-        <section class="character-stage">
-
-            <!-- KARAKTER KIRI -->
-
-            <div class="character character-left">
-
-                <img
-                    src="assets/sprites/Rachel.png"
-                    alt="Rachel"
-                    class="character-image"
-                >
-
-            </div>
-
-
-            <!-- KARAKTER TENGAH -->
-
-            <div class="character character-center">
-
-                <img
-                    src="assets/sprites/Liam.png"
-                    alt="Liam"
-                    class="character-image"
-                >
-
-            </div>
-
-
-            <!-- KARAKTER KANAN -->
-
-            <div class="character character-right">
-
-                <img
-                    src="assets/sprites/Ethan.png"
-                    alt="Ethan"
-                    class="character-image"
-                >
-
-            </div>
-
-        </section>
-
       <!-- ================================================= -->
       <!-- SYSTEM INFORMATION -->
       <!-- ================================================= -->
@@ -345,102 +306,11 @@
             </header>
 
 
-            <div class="chapter-grid">
-
-
-                <button class="chapter-card unlocked">
-
-                    <span>
-
-                        CHAPTER 00
-
-                    </span>
-
-                    <h3>
-
-                        PROLOGUE
-
-                    </h3>
-
-                    <p>
-
-                        THE BEGINNING OF THE TIMELINE
-
-                    </p>
-
-                </button>
-
-
-                <button class="chapter-card unlocked">
-
-                    <span>
-
-                        CHAPTER 01
-
-                    </span>
-
-                    <h3>
-
-                        FIRST CONTACT
-
-                    </h3>
-
-                    <p>
-
-                        TIMELINE DATA AVAILABLE
-
-                    </p>
-
-                </button>
-
-
-                <button class="chapter-card locked">
-
-                    <span>
-
-                        CHAPTER 02
-
-                    </span>
-
-                    <h3>
-
-                        █████████
-
-                    </h3>
-
-                    <p>
-
-                        ACCESS DENIED
-
-                    </p>
-
-                </button>
-
-
-                <button class="chapter-card locked">
-
-                    <span>
-
-                        CHAPTER 03
-
-                    </span>
-
-                    <h3>
-
-                        █████████
-
-                    </h3>
-
-                    <p>
-
-                        ACCESS DENIED
-
-                    </p>
-
-                </button>
-
-
-            </div>
+            <div
+                id="chapter-grid"
+                class="chapter-grid"
+                aria-live="polite"
+            ></div>
 
         </div>
 
@@ -710,6 +580,7 @@
     <section
         id="settings-screen"
         class="screen sub-screen"
+        aria-hidden="true"
     >
 
         <div class="database-window settings-window">
@@ -832,6 +703,48 @@
 
         </section>
 
-        <script src="script.js"></script>
-    </body>
+        <!-- ================================================= -->
+        <!-- TERMINATION SCREEN -->
+        <!-- ================================================= -->
+
+        <section
+            id="termination-screen"
+            class="termination-screen"
+            role="dialog"
+            aria-modal="true"
+            aria-hidden="true"
+        >
+
+            <p class="termination-code">
+                SYSTEM // CONNECTION CLOSED
+            </p>
+
+            <h2>
+                TERMINATED
+            </h2>
+
+            <p>
+                Timeline interface has been shut down.
+                No further communication is possible.
+            </p>
+
+            <button
+                id="reboot-button"
+                class="back-button"
+                type="button"
+            >
+                ⟲ REBOOT SYSTEM
+            </button>
+
+        </section>
+
+    </div>
+
+    <script src="game/config/variables.js"></script>
+
+    <script src="game/config/chapters.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
 </html>
